@@ -1,3 +1,5 @@
+# Exemple
+ Exemple de [graphql-codegen](https://github.com/kamilkisiela/apollo-angular-services)
 # Rickapp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.8.
