@@ -1,7 +1,7 @@
-<div *ngFor="let episode of episodes">
+<div *ngFor="let episode of episodes | async">
   {{episode.name}}
   <ul>
-    <li *ngFor="let character of episode.characters">{{
+    <li *ngFor="let character of episode.characters">>{{
       character.name
       }}
       <img src="{{character.image}}" alt="" width="100px">

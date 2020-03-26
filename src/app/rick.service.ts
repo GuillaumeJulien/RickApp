@@ -2,44 +2,25 @@ import {Injectable} from '@angular/core';
 import {Apollo} from 'apollo-angular';
 import gql from 'graphql-tag';
 import {map} from 'rxjs/operators';
+import {GetcharacterGQL, GetEpGQL} from '../generated/graphql';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RickService {
 
-  constructor(private readonly apollo: Apollo) {
+  constructor(private readonly apollo: Apollo, private readonly getepisode: GetEpGQL, private readonly getcharacterQuery: GetcharacterGQL) {
 
   }
 
   searchCharacters(characterName: string) {
-    const getCharacter = gql`query getcharacter{
-      characters (filter:{name : "${characterName}"}){
-        results{
-          name
-          image
-        }
-      }
-    }`;
-    return this.apollo.watchQuery<any>({query: getCharacter})
-      .valueChanges
-      .pipe(map(result => result.data.characters.results));
+    return this.getcharacterQuery.watch({characterName}).valueChanges;
   }
 
   getEpisodes() {
-    const getCharacter = gql`query getEp{
-      episodes {
-        results {
-          name
-          characters {
-            name
-            image
-          }
-        }
-      }
-    }`;
-    return this.apollo.watchQuery<any>({query: getCharacter})
+    return this.getepisode
+      .watch()
       .valueChanges
-      .pipe(map(result => result.data.episodes.results));
+      .pipe(map(source => source.data.episodes.results));
   }
 }

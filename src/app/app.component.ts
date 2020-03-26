@@ -1,29 +1,19 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 import {RickService} from './rick.service';
-import {Episode} from './episode';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
   title = 'rickapp';
-  private episodes: Episode[];
-  private loadingState = false;
+  private episodes: Observable<any[]>;
   constructor(private readonly rickService: RickService) {
   }
 
   ngOnInit(): void {
-    this.episodes = [];
-    this.rickService.getEpisodes().subscribe(data => {
-     data.map(episode => {
-       this.episodes.push(episode);
-     });
-    });
-  }
-
-  ngOnDestroy(): void {
+    this.episodes = this.rickService.getEpisodes();
   }
 }

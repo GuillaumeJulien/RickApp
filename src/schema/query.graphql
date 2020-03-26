@@ -1,0 +1,19 @@
+query getEp{
+  episodes {
+    results {
+      name
+      characters {
+        name
+        image
+      }
+    }
+  }
+}
+query getcharacter($characterName : String){
+  characters (filter:{name : $characterName}){
+    results{
+      name
+      image
+    }
+  }
+}
